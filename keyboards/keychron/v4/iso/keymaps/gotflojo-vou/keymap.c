@@ -23,18 +23,19 @@
 
 
 enum layers {
-    MAC_BASE,
     WIN_BASE,
+    VOU_BASE,
+    SYMBOL,
     _FN1,
     _FN2,
     _FN3
 };
 
 const custom_shift_key_t custom_shift_keys[] = {
-  {KC_DOT , KC_QUES}, // Shift . is ?
-  {KC_COMM, KC_EXLM}, // Shift , is !
-  {KC_MINS, KC_EQL }, // Shift - is =
-  {KC_COLN, KC_SCLN}, // Shift : is ;
+  {KC_1 , DE_DEG}, // Shift 1 is °
+  {KC_2 , DE_SECT}, // Shift 2 is §
+  {KC_6, DE_DLR}, // Shift 6 is $
+  {KC_7, DE_EURO}, // Shift 7 is €
 };
 
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
@@ -45,19 +46,26 @@ uint8_t NUM_CUSTOM_SHIFT_KEYS =
 #define KC_FLXP LGUI(KC_E)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [MAC_BASE] = LAYOUT_60_iso(
-        KC_ESC,  KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,
-        KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,
-        KC_CAPS, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,  KC_NUHS,  KC_ENT,
-        KC_LSFT, KC_NUBS,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH,            KC_RSFT,
-        KC_LCTL, KC_LOPT,  KC_LCMD,                            KC_SPC,                             KC_RCMD,  MO(_FN1), MO(_FN3), KC_RCTL),
-
     [WIN_BASE] = LAYOUT_60_iso(
         KC_ESC,  KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,
-        KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,
+        KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    DE_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,
         KC_CAPS, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,  KC_NUHS,  KC_ENT,
-        KC_LSFT, KC_NUBS,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH,            KC_RSFT,
+        KC_LSFT, KC_NUBS,  DE_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH,            KC_RSFT,
         KC_LCTL, KC_LWIN,  KC_LALT,                            KC_SPC,                             KC_RALT,  MO(_FN2), MO(_FN3), KC_RCTL),
+
+    [VOU_BASE] = LAYOUT_60_iso(
+        KC_ESC,     KC_1,     KC_2,    KC_3,    KC_4,     KC_5,     KC_6,     KC_7,    KC_8,    KC_9,    KC_0,     DE_MINS,    NE_GRV,   KC_BSPC,
+        KC_TAB,     DE_V,     DE_DOT,  DE_O,    DE_U,     DE_ADIA,  DE_Q,     DE_G,    DE_L,    DE_H,    DE_F,     DE_J,        NE_ACUT,
+        MO(SYMBOL), DE_C,     DE_A,    DE_E,    DE_I,     DE_Y,     DE_B,     DE_T,    DE_R,    DE_N,    DE_S,     MO(SYMBOL),  DE_SS,    KC_ENT,
+        KC_LSFT,    KC_NUBS,  DE_Z,    DE_X,    DE_COMM,  DE_UDIA,  DE_ODIA,  DE_P,    DE_D,    DE_W,    DE_M,     DE_K,            KC_RSFT,
+        KC_LCTL,    KC_LOPT,  KC_LCMD,                            KC_SPC,                               KC_RCMD,   MO(_FN1),    MO(_FN3), KC_RCTL),
+
+    [SYMBOL] = LAYOUT_60_iso(
+        KC_ESC,     _______,     DE_SUP2,    DE_SUP3,    _______,     _______,     _______,     _______,    _______,    _______,    _______,     _______,    _______,   KC_BSPC,
+        KC_TAB,     DE_AT,     DE_PERC,  DE_LCBR,    DE_RCBR,     DE_CIRC,  DE_EXLM,     DE_LABK,    DE_RABK,    DE_EQL,    DE_AMPR,     DE_EURO,     _______,
+        MO(SYMBOL), DE_PIPE,     DE_GRV,    DE_LPRN,     DE_RPRN,     DE_ASTR,   DE_QUES,  DE_SLSH,    DE_COLN,    DE_MINS,    DE_UNDS,     MO(SYMBOL), _______,    KC_ENT,
+        KC_LSFT,    KC_NUBS,  DE_HASH,    DE_LBRC,    DE_RBRC,  DE_TILD,  DE_DLR,  DE_PLUS,    DE_DQUO,    DE_QUOT,    DE_BSLS,     DE_SCLN,            KC_RSFT,
+        KC_LCTL,    KC_LOPT,  KC_LCMD,                            KC_SPC,                               KC_RCMD,   MO(_FN1),    MO(_FN3), KC_RCTL),
 
     [_FN1] = LAYOUT_60_iso(
         KC_GRV,  KC_BRID,  KC_BRIU, KC_NO,   KC_NO,   RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  RGB_MOD,
