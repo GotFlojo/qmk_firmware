@@ -41,7 +41,6 @@ const custom_shift_key_t custom_shift_keys[] = {
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
-
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
 
@@ -74,35 +73,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, KC_MUTE,  KC_VOLD, KC_VOLU, KC_BRID, KC_BRIU, _______, _______, KC_INS, KC_DEL, KC_PSCR,   _______,
         _______, _______,  _______,                            _______,                            _______,  _______,  _______,  _______),
 
-    [_FN2] = LAYOUT_60_iso(
-        KC_GRV,  KC_BRID,  KC_BRIU, KC_TASK, KC_FLXP, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  RGB_MOD,
-        RGB_TOG, RGB_MOD,  RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, KC_APP,  KC_SCRL, KC_INS,   KC_PGUP,  KC_HOME,
-        _______, RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, KC_UP,   KC_PSCR, KC_PGDN,  KC_END,   _______,  _______,
-        _______, _______,  _______, _______, _______, _______, _______, NK_TOGG, KC_LEFT, KC_DOWN, KC_RIGHT, KC_DEL,             _______,
-        _______, _______,  _______,                            _______,                            _______,  _______,  _______,  _______),
-
     [_FN3] = LAYOUT_60_iso(
-        KC_TILD, KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,   _______,
-        RGB_TOG, RGB_MOD,  RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______,  _______,  _______,
-        _______, RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______,  _______,  _______,  _______,
-        _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,            _______,
+        KC_NO, KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        RGB_TOG, RGB_MOD,  RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,  KC_NO,
+        _______, RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,  KC_NO,  _______,
+        _______, _______,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,            _______,
         _______, _______,  _______,                            _______,                            _______,  _______,  _______,  _______)
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_custom_shift_keys(keycode, record)) { return false; }
+    //Custom Shift keys should only apply to vou layers
+    if (get_highest_layer(layer_state|default_layer_state) != WIN_BASE) {
+        if (!process_custom_shift_keys(keycode, record)) { return false; }
+    }
     return true;
 }
 
+// Color layers differently
+// https://github.com/qmk/qmk_firmware/blob/master/docs/feature_rgb_matrix.md#indicator-examples-idindicator-examples
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     for (uint8_t i = led_min; i < led_max; i++) {
         switch(get_highest_layer(layer_state|default_layer_state)) {
             case WIN_BASE:
                 rgb_matrix_set_color(i, RGB_BLUE);
                 break;
-            // case VOU_BASE:
-            //     rgb_matrix_set_color(i, RGB_PURPLE);
-            //     break;
             case KEY_MOUSE:
                 rgb_matrix_set_color(i, RGB_GREEN);
                 break;
