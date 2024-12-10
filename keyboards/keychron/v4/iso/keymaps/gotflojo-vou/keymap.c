@@ -27,7 +27,6 @@ enum layers {
     VOU_BASE,
     SYMBOL,
     KEY_MOUSE,
-    _FN2,
     _FN3
 };
 
@@ -44,6 +43,19 @@ uint8_t NUM_CUSTOM_SHIFT_KEYS =
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
 
+// Left-hand home row mods
+#define HOME_C LGUI_T(DE_C)
+#define HOME_A LALT_T(DE_A)
+#define HOME_E LSFT_T(DE_E)
+#define HOME_I LCTL_T(DE_I)
+
+// Right-hand home row mods
+#define HOME_T RCTL_T(DE_T)
+#define HOME_R RSFT_T(DE_R)
+#define HOME_N LALT_T(DE_N)
+#define HOME_S RGUI_T(DE_S)
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [WIN_BASE] = LAYOUT_60_iso(
         KC_ESC,  KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,
@@ -53,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LWIN,  KC_LALT,                            KC_SPC,                             KC_RALT,  MO(KEY_MOUSE), MO(_FN3), KC_RCTL),
 
     [VOU_BASE] = LAYOUT_60_iso(
-        KC_ESC,     KC_1,     KC_2,    KC_3,    KC_4,     KC_5,     KC_6,     KC_7,    KC_8,    KC_9,    KC_0,     DE_MINS,    NE_GRV,   KC_BSPC,
+        KC_ESC,     KC_1,     KC_2,    KC_3,    KC_4,     KC_5,     KC_6,     KC_7,    KC_8,    KC_9,    KC_0,     DE_MINS,     NE_GRV,   KC_BSPC,
         KC_TAB,     DE_V,     DE_DOT,  DE_O,    DE_U,     DE_ADIA,  DE_Q,     DE_G,    DE_L,    DE_H,    DE_F,     DE_J,        NE_ACUT,
-        MO(SYMBOL), DE_C,     DE_A,    DE_E,    DE_I,     DE_Y,     DE_B,     DE_T,    DE_R,    DE_N,    DE_S,     MO(SYMBOL),  DE_SS,    KC_ENT,
+        MO(SYMBOL), HOME_C,   HOME_A,  HOME_E,  HOME_I,   DE_Y,     DE_B,     HOME_T,  HOME_R,  HOME_N,  HOME_S,   MO(SYMBOL),  DE_SS,    KC_ENT,
         KC_LSFT,    KC_NUBS,  DE_Z,    DE_X,    DE_COMM,  DE_UDIA,  DE_ODIA,  DE_P,    DE_D,    DE_W,    DE_M,     DE_K,            KC_RSFT,
         KC_LCTL,    KC_LWIN,  KC_LALT,                            KC_SPC,                               KC_RALT,   MO(KEY_MOUSE),    MO(_FN3), KC_RCTL),
 
@@ -68,9 +80,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [KEY_MOUSE] = LAYOUT_60_iso(
         _______,   KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,      _______,
-        _______, KC_BTN1,  KC_MS_U, KC_BTN2, KC_WH_U, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP,
-        _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, _______, _______, _______,   KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_PGDN,  _______,
-        _______, _______, KC_MUTE,  KC_VOLD, KC_VOLU, KC_BRID, KC_BRIU, _______, _______, KC_INS, KC_DEL, KC_PSCR,   _______,
+        _______, KC_WH_U, KC_BTN1,  KC_MS_U, KC_BTN2, KC_NO, KC_NO, KC_NO, KC_NO, KC_HOME, KC_UP,    KC_END,    KC_PGUP,
+        _______, KC_WH_D, KC_MS_L,  KC_MS_D, KC_MS_R, KC_NO, KC_NO, KC_NO, KC_NO, KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_PGDN,  _______,
+        _______, _______, KC_MUTE,  KC_VOLD, KC_VOLU, KC_BRID, KC_BRIU, KC_NO, KC_NO, KC_INS, KC_DEL, KC_PSCR,   _______,
         _______, _______,  _______,                            _______,                            _______,  _______,  _______,  _______),
 
     [_FN3] = LAYOUT_60_iso(
@@ -105,4 +117,16 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
     }
     return false;
+}
+
+// Return a custom tapping time based on what key/finger is used
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SFT_T(KC_SPC):
+            return TAPPING_TERM + 1250;
+        case LT(1, KC_GRV):
+            return 130;
+        default:
+            return TAPPING_TERM;
+    }
 }

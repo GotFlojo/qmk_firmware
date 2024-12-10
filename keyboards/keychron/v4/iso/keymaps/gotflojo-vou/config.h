@@ -21,3 +21,6 @@
 #define RGB_MATRIX_DEFAULT_HUE 191 // Sets the default hue value, if none has been set
 #define RGB_MATRIX_DEFAULT_SAT 255 // Sets the default saturation value, if none has been set
 #define RGB_MATRIX_DEFAULT_VAL 255
+#define TAPPING_TERM 200 // Time that needs to pass to distinguish tap from hold -> used for home row mod keys
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+//#define QUICK_TAP_TERM 0
