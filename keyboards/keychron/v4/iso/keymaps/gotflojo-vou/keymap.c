@@ -68,15 +68,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [KEY_MOUSE] = LAYOUT_60_iso(
         _______,   KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,      _______,
-        _______, KC_BTN1,  KC_MS_U, KC_BTN2, KC_WH_U, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP,
-        _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, _______, _______, _______,   KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_PGDN,  _______,
+        _______, MS_BTN1,  MS_UP, MS_BTN2, MS_WHLU, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP,
+        _______, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD, _______, _______, _______, _______,   KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_PGDN,  _______,
         _______, _______, KC_MUTE,  KC_VOLD, KC_VOLU, KC_BRID, KC_BRIU, _______, _______, KC_INS, KC_DEL, KC_PSCR,   _______,
         _______, _______,  _______,                            _______,                            _______,  _______,  _______,  _______),
 
     [_FN3] = LAYOUT_60_iso(
         KC_NO, KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        RGB_TOG, RGB_MOD,  RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,  KC_NO,
-        _______, RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,  KC_NO,  _______,
+        RM_TOGG, RM_NEXT,  RM_VALU, RM_HUEU, RM_SATU, RM_SPDU, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,  KC_NO,
+        _______, RM_PREV, RM_VALD, RM_HUED, RM_SATD, RM_SPDD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,  KC_NO,  _______,
         _______, _______,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,            _______,
         _______, _______,  _______,                            _______,                            _______,  _______,  _______,  _______)
 };
