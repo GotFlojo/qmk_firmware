@@ -12,7 +12,10 @@
 */
 
 #include QMK_KEYBOARD_H
-aaaaa
+// see https://github.com/qmk/qmk_firmware/tree/master/quantum/keymap_extras
+#include "keymap_german.h"
+#include "keymap_neo2.h"
+
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ D E F I N I T I O N S                                                                                                  │
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -34,7 +37,12 @@ enum totem_layers {
 // │ d e f i n e   k e y c o d e s                   │
 // └─────────────────────────────────────────────────┘
 
-enum custom_keycodes { COLEMAK = SAFE_RANGE, QWERTY, LOWER, RAISE, ADJUST, OS_SWAP, MAKE_H, SNAP };
+// https://docs.qmk.fm/custom_quantum_functions#defining-a-new-keycode
+enum custom_keycodes {
+    OS_SWAP = SAFE_RANGE,
+    MAKE_H,
+    SNAP
+};
 
 // ┌─────────────────────────────────────────────────┐
 // │ d e f i n e   m a c r o n a m e s               │
@@ -64,7 +72,7 @@ enum custom_keycodes { COLEMAK = SAFE_RANGE, QWERTY, LOWER, RAISE, ADJUST, OS_SW
 #define SHT_4 MT(MOD_LSFT, KC_P4)
 
 // TODO include the german definitons from QMK
-#define DE_AT RALT(KC_Q)
+// #define DE_AT RALT(KC_Q)
 #define DE_PRCNT LSFT(KC_5)
 #define DE_LBRACE RALT(KC_7)
 #define DE_RBRACE RALT(KC_0)
@@ -72,8 +80,8 @@ enum custom_keycodes { COLEMAK = SAFE_RANGE, QWERTY, LOWER, RAISE, ADJUST, OS_SW
 #define DE_RPAREN LSFT(KC_9)
 #define DE_LBRACK RALT(KC_8)
 #define DE_RBRACK RALT(KC_9)
-#define DE_PIPE RALT(KC_NONUS_BACKSLASH)
-#define DE_HASH KC_NONUS_HASH
+// #define DE_PIPE RALT(KC_NONUS_BACKSLASH)
+// #define DE_HASH KC_NONUS_HASH
 #define DE_LT KC_NONUS_BACKSLASH
 #define DE_GT LSFT(KC_NONUS_BACKSLASH)
 #define DE_SQUOT LSFT(KC_NONUS_HASH)
@@ -88,6 +96,7 @@ enum custom_keycodes { COLEMAK = SAFE_RANGE, QWERTY, LOWER, RAISE, ADJUST, OS_SW
 #define SYMBOL LT(_SYMBOL, KC_ESC)
 #define NUMBER LT(_NUMBER, KC_TAB)
 #define ADJUST MO(_ADJUST)
+#define RAISE MO(_RAISE)
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
@@ -115,7 +124,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   KC_V,      KC_DOT,   KC_O,     KC_U,     KC_QUOTE,     KC_Q,     KC_G,     KC_L,     KC_H,     KC_F,
                   GUI_C,     ALT_A,    CTL_E,    SHT_I,    KC_Z,         KC_B,     SHT_T,    CTL_R,    ALT_N,    GUI_S,
         KC_MINUS, KC_SCLN,   KC_Y,     KC_X,     KC_COMMA, KC_LBRC,      KC_P,     KC_D,     KC_W,     KC_M,     KC_K,     KC_J,
-                                     KC_DEL,   NUMBER,   KC_SPC,       KC_ENT,   SYMBOL,   KC_BSPC),
+                                     KC_DEL,   NUMBER,   KC_SPC,       KC_ENT,   SYMBOL,   KC_BSPC
+    ),
 
     /*
 
@@ -139,7 +149,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  DE_AT,    DE_PRCNT,  DE_LBRACE, DE_RBRACE,  KC_GRAVE,    LSFT(KC_1),  DE_LT,      DE_GT,        LSFT(KC_0),  LSFT(KC_6),
                  DE_PIPE,  DE_BTICK,  DE_LPAREN, DE_RPAREN,  DE_STAR,     DE_QSTN,     DE_SLASH,   LSFT(KC_DOT), KC_SLASH,    LSFT(KC_SLASH),
         KC_NO,   DE_HASH,  DE_DOLLAR, DE_LBRACK, DE_RBRACK,  DE_TILDE,    KC_RBRC,     LSFT(KC_2), DE_SQUOT,     DE_BSLASH,   LSFT(KC_COMMA),  KC_NO,
-                                      KC_TRNS,   ADJUST,     KC_TRNS,     KC_TRNS,     RAISE,      KC_TRNS),
+                                      KC_TRNS,   ADJUST,     KC_TRNS,     KC_TRNS,     RAISE,      KC_TRNS
+    ),
 
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -161,8 +172,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ╷        ╷         ╷         ╷         ╷          ╷         ╷╷         ╷        ╷         ╷         ╷           ╷         ╷
                  KC_CAPS,  KC_NUM,   KC_UP,    KC_INSERT, KC_NO,     KC_NO,    KC_P7,   KC_P8,    KC_P9,    KC_KP_PLUS,
                  KC_HOME,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  KC_NO,     KC_NO,    SHT_4,   KC_P5,    KC_P6,    KC_NO,
-        SNAP,    KC_END,   KC_PGUP,  KC_NO,    KC_PGDN,   KC_NO,     KC_NO,    KC_P1,   KC_P2,    KC_P3,    KC_PAST,     KC_TRNS,
-                                     KC_TRNS,  KC_TRNS,   KC_TRNS,   KC_TRNS,  ADJUST,  KC_P0),
+        KC_NO,    KC_END,   KC_PGUP,  KC_NO,    KC_PGDN,   KC_NO,     KC_NO,    KC_P1,   KC_P2,    KC_P3,    KC_PAST,     KC_TRNS,
+                                     KC_TRNS,  KC_TRNS,   KC_TRNS,   KC_TRNS,  ADJUST,  KC_P0
+    ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
 
@@ -181,7 +193,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_RAISE] = LAYOUT(
         // ╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-        KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, RALT(KC_U), RALT(KC_3), KC_BSLS, RALT(KC_A), RALT(KC_F), RALT(KC_S), RALT(KC_G), XXXXXXX, XXXXXXX, LSFT(RALT(KC_4)), RALT(KC_5), RALT(KC_4), RALT(KC_O), XXXXXXX, LSFT(KC_GRV), KC_TILD, RALT(KC_C), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DM_REC1, DM_RSTP, DM_PLY1, _______, ADJUST, _______, _______, _______, _______),
+                      KC_EXLM,    KC_AT,   KC_HASH,   KC_DLR,   KC_PERC, KC_CIRC,    KC_AMPR, RALT(KC_U),RALT(KC_3),KC_BSLS,
+                      RALT(KC_A), RALT(KC_F), RALT(KC_S), RALT(KC_G), XXXXXXX, XXXXXXX, LSFT(RALT(KC_4)), RALT(KC_5), RALT(KC_4), RALT(KC_O),
+                      XXXXXXX, LSFT(KC_GRV), KC_TILD, RALT(KC_C), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NO, KC_NO, KC_NO,
+                      _______, KC_NO, _______, _______, _______, _______
+    ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
 
@@ -200,7 +216,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJUST] = LAYOUT(
         //      ╷         ╷        ╷         ╷         ╷              ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12, DB_TOGG, QWERTY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11, MAKE_H, OS_SWAP, COLEMAK, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, KC_F13, _______, _______, _______, _______, _______, _______)
+                  QK_BOOT, XXXXXXX,   XXXXXXX, XXXXXXX,     XXXXXXX,     XXXXXXX,   KC_F7,   KC_F8, KC_F9, KC_F12,
+                  DB_TOGG, KC_NO, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
+                  KC_NO, KC_NO, KC_NO, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, KC_F13,
+                  _______, _______, _______, _______, _______, _______
+    ),
     /*       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
        ┌─────────────────────────────────────────────────┐
        │ t e m p l a t e                                 │      ╭╮╭╮╭╮╭╮
@@ -239,7 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     keymap_config.swap_lctl_lgui = false; // ─── WIN
                 }
-                eeconfig_update_keymap(keymap_config.raw);
+                eeconfig_update_keymap(&keymap_config);
                 clear_keyboard(); // ──── clear to prevent stuck keys
                 return false;
             }
