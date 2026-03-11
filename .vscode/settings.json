@@ -1,5 +1,18 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+    "terminal.integrated.profiles.windows": {
+        "QMK_MSYS": {
+            "path": "C:/Program Files/QMK_MSYS/usr/bin/bash.exe",
+            "env": {
+                "MSYSTEM": "MINGW64",
+                "CHERE_INVOKING": "1"
+            },
+            "args": [
+                "--login"
+            ]
+        }
+    },
+    "terminal.integrated.cursorStyle": "line",
     // Unofficially, QMK uses spaces for indentation
     "editor.insertSpaces": true,
     // Configure glob patterns for excluding files and folders.
@@ -35,22 +48,33 @@
     "[json]": {
         "editor.formatOnSave": false
     },
-    "clangd.arguments": ["--header-insertion=never"],
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ],
     "json.schemas": [
         {
-            "fileMatch": ["qmk.json"],
+            "fileMatch": [
+                "qmk.json"
+            ],
             "url": "./data/schemas/user_repo_v1_1.jsonschema"
         },
         {
-            "fileMatch": ["qmk_module.json"],
+            "fileMatch": [
+                "qmk_module.json"
+            ],
             "url": "./data/schemas/community_module.jsonschema"
         },
         {
-            "fileMatch": ["keyboard.json", "info.json"],
+            "fileMatch": [
+                "keyboard.json",
+                "info.json"
+            ],
             "url": "./data/schemas/keyboard.jsonschema"
         },
         {
-            "fileMatch": ["keymap.json"],
+            "fileMatch": [
+                "keymap.json"
+            ],
             "url": "./data/schemas/keymap.jsonschema"
         }
     ]
